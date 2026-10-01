@@ -59,7 +59,17 @@
   header.top img { width: 32px; height: 32px; border-radius: 9px; }
   header.top span { font-weight: 800; font-size: 18px; letter-spacing: 0.01em; }
 
-  .hero { text-align: center; padding: 28px 0 36px; }
+  .hero { position: relative; text-align: center; padding: 28px 0 36px; overflow: hidden; }
+  .hero-blob {
+    position: absolute;
+    top: -120px; left: 50%;
+    width: 640px; height: 640px;
+    transform: translateX(-50%);
+    z-index: 0;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .hero > * { position: relative; z-index: 1; }
   .hero-icon { width: 84px; height: 84px; border-radius: 22px; box-shadow: 0 10px 28px rgba(43,36,32,0.18); margin-bottom: 20px; }
   .hero h1 {
     font-size: clamp(26px, 6vw, 36px);
@@ -108,6 +118,54 @@
   }
   .problem strong { color: var(--accent); }
 
+  /* スクリーンショットをスマホ風フレームではめ込んで見せる */
+  .screens {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 6px 2px 14px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .screens::-webkit-scrollbar { display: none; }
+  .phone {
+    flex: none;
+    scroll-snap-align: center;
+    width: 210px;
+  }
+  .phone .frame {
+    position: relative;
+    border-radius: 32px;
+    padding: 10px;
+    background: linear-gradient(160deg, #3a322c, #1c1714);
+    box-shadow: 0 16px 36px rgba(43,36,32,0.28);
+  }
+  .phone .frame::before {
+    content: '';
+    position: absolute;
+    top: 10px; left: 50%;
+    transform: translateX(-50%);
+    width: 58px; height: 16px;
+    background: #1c1714;
+    border-radius: 999px;
+    z-index: 2;
+  }
+  .phone .screen {
+    display: block;
+    width: 100%;
+    aspect-ratio: 390 / 760;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 22px;
+    background: var(--surface2);
+  }
+  .phone .caption {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+
   .features { display: grid; gap: 12px; }
   .feature {
     display: flex; gap: 12px; align-items: flex-start;
@@ -118,12 +176,10 @@
   }
   .feature .check {
     flex: none;
-    width: 22px; height: 22px;
+    width: 30px; height: 30px;
     border-radius: 999px;
     background: var(--accent-soft);
-    color: var(--accent);
-    font-weight: 800;
-    font-size: 13px;
+    font-size: 15px;
     display: flex; align-items: center; justify-content: center;
   }
   .feature .text { font-size: 15px; }
@@ -153,6 +209,15 @@
 
   <div class="wrap">
     <div class="hero">
+      <svg class="hero-blob" viewBox="0 0 600 600" aria-hidden="true">
+        <defs>
+          <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff6b4a" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#6b3a78" stop-opacity="0.30"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#blobGrad)" d="M421,320Q420,420,330,460Q240,500,165,440Q90,380,95,285Q100,190,180,135Q260,80,350,115Q440,150,435,235Q430,320,421,320Z"/>
+      </svg>
       <img class="hero-icon" src="icon.png" alt="kashikariアプリアイコン">
       <h1>かんたん・あんしん・スマートに<br>お金をシェア</h1>
       <p class="sub">友達との貸し借りを、お金も頼みごとも一緒に記録する。割り勘もオート精算も、このアプリひとつで。</p>
@@ -168,30 +233,48 @@
     </section>
 
     <section>
+      <h2>実際の画面</h2>
+      <div class="screens">
+        <div class="phone">
+          <div class="frame"><img class="screen" src="screen-groups.png" alt="グループ一覧画面"></div>
+          <div class="caption">グループでまとめて管理</div>
+        </div>
+        <div class="phone">
+          <div class="frame"><img class="screen" src="screen-balance.png" alt="残高・精算画面"></div>
+          <div class="caption">残高も精算方法も一目で</div>
+        </div>
+        <div class="phone">
+          <div class="frame"><img class="screen" src="screen-addentry.png" alt="貸し借り記録画面"></div>
+          <div class="caption">お金も頼みごとも割り勘も</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
       <h2>できること</h2>
       <div class="features">
         <div class="feature">
-          <div class="check">✓</div>
+          <div class="check">🤝</div>
           <div class="text"><b>貸し借り・頼みごとの記録</b><span>お金だけでなく「今度ランチおごって」のような頼みごとも一緒に管理</span></div>
         </div>
         <div class="feature">
-          <div class="check">✓</div>
+          <div class="check">✅</div>
           <div class="text"><b>2段階確認で揉めない精算</b><span>「支払った」→「受け取った」の2ステップ確認だから、うやむやになりません</span></div>
         </div>
         <div class="feature">
-          <div class="check">✓</div>
+          <div class="check">➗</div>
           <div class="text"><b>割り勘の自動計算</b><span>複数人での立て替え・割り勘も自動で計算</span></div>
         </div>
         <div class="feature">
-          <div class="check">✓</div>
+          <div class="check">✨</div>
           <div class="text"><b>オート精算</b><span>グループ内の貸し借りを、最小の支払い回数にまとめて提案</span></div>
         </div>
         <div class="feature">
-          <div class="check">✓</div>
+          <div class="check">📸</div>
           <div class="text"><b>レシート添付・通知</b><span>レシート画像を添付して記録を残せる。変更があれば通知でお知らせ</span></div>
         </div>
         <div class="feature">
-          <div class="check">✓</div>
+          <div class="check">🔑</div>
           <div class="text"><b>かんたんログイン</b><span>Apple・Google・LINE・メールアドレスから選んでログイン</span></div>
         </div>
       </div>
