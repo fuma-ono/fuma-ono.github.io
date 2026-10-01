@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kashikari — 友達とのお金の貸し借りを記録・精算</title>
+<meta name="description" content="「あれ、まだ返してもらってなかったっけ?」を無くす、友達とのお金の記録アプリ。割り勘の自動計算、オート精算、頼みごとの記録もまとめてできます。">
+<link rel="icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fff9f2;
+    --surface: #ffffff;
+    --surface2: #fff3e8;
+    --ink: #2b2420;
+    --muted: #948572;
+    --line: #f1e4d3;
+    --accent: #ff6b4a;
+    --accent-ink: #ffffff;
+    --accent-soft: #ffe4da;
+    --plum: #6b3a78;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #221c17;
+      --surface: #2c2520;
+      --surface2: #342a22;
+      --ink: #f7efe6;
+      --muted: #b8a995;
+      --line: #43372c;
+      --accent-soft: #4a3028;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #221c17;
+    --surface: #2c2520;
+    --surface2: #342a22;
+    --ink: #f7efe6;
+    --muted: #b8a995;
+    --line: #43372c;
+    --accent-soft: #4a3028;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'M PLUS Rounded 1c', system-ui, -apple-system, 'Hiragino Sans', sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+  header.top {
+    display: flex; align-items: center; gap: 10px;
+    padding: 20px 16px;
+  }
+  header.top img { width: 32px; height: 32px; border-radius: 9px; }
+  header.top span { font-weight: 800; font-size: 18px; letter-spacing: 0.01em; }
+
+  .hero { text-align: center; padding: 28px 0 36px; }
+  .hero-icon { width: 84px; height: 84px; border-radius: 22px; box-shadow: 0 10px 28px rgba(43,36,32,0.18); margin-bottom: 20px; }
+  .hero h1 {
+    font-size: clamp(26px, 6vw, 36px);
+    font-weight: 800;
+    margin: 0 0 14px;
+    line-height: 1.4;
+    background: linear-gradient(120deg, var(--accent), var(--plum));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero p.sub {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 440px;
+    margin: 0 auto 28px;
+  }
+  .cta {
+    display: inline-block;
+    background: linear-gradient(120deg, var(--accent), var(--plum));
+    color: var(--accent-ink);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 14px 32px;
+    border-radius: 999px;
+    box-shadow: 0 10px 24px rgba(255,107,74,0.28);
+  }
+  .cta:active { opacity: 0.85; }
+
+  section { padding: 36px 0; border-top: 1px solid var(--line); }
+  section h2 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 16px;
+  }
+
+  .problem {
+    background: var(--surface2);
+    border-radius: 18px;
+    padding: 22px 20px;
+    font-size: 16px;
+  }
+  .problem strong { color: var(--accent); }
+
+  .features { display: grid; gap: 12px; }
+  .feature {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 16px;
+  }
+  .feature .check {
+    flex: none;
+    width: 22px; height: 22px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 800;
+    font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .feature .text { font-size: 15px; }
+  .feature .text b { display: block; margin-bottom: 2px; }
+  .feature .text span { color: var(--muted); font-size: 13.5px; }
+
+  .cta-wrap { text-align: center; padding: 40px 0 48px; }
+  .cta-wrap p { color: var(--muted); font-size: 14px; margin: 16px 0 0; }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 24px 16px 40px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  footer a { color: var(--muted); text-decoration: underline; margin: 0 8px; }
+</style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap" style="display:flex; align-items:center; gap:10px; padding:0;">
+      <img src="icon.png" alt="kashikari">
+      <span>kashikari</span>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="hero">
+      <img class="hero-icon" src="icon.png" alt="kashikariアプリアイコン">
+      <h1>かんたん・あんしん・スマートに<br>お金をシェア</h1>
+      <p class="sub">友達との貸し借りを、お金も頼みごとも一緒に記録する。割り勘もオート精算も、このアプリひとつで。</p>
+      <a class="cta" href="https://apps.apple.com/app/id6808062809">App Storeで入手</a>
+    </div>
+
+    <section>
+      <h2>こんな経験、ありませんか</h2>
+      <div class="problem">
+        <strong>「あれ、まだ返してもらってなかったっけ?」</strong><br>
+        友達との貸し借りは、記憶やLINEのやり取りだけに頼るとすぐ曖昧になります。kashikariは、誰が・誰に・いくら(または何を)貸しているかを、グループで共有しながら記録・精算できるアプリです。
+      </div>
+    </section>
+
+    <section>
+      <h2>できること</h2>
+      <div class="features">
+        <div class="feature">
+          <div class="check">✓</div>
+          <div class="text"><b>貸し借り・頼みごとの記録</b><span>お金だけでなく「今度ランチおごって」のような頼みごとも一緒に管理</span></div>
+        </div>
+        <div class="feature">
+          <div class="check">✓</div>
+          <div class="text"><b>2段階確認で揉めない精算</b><span>「支払った」→「受け取った」の2ステップ確認だから、うやむやになりません</span></div>
+        </div>
+        <div class="feature">
+          <div class="check">✓</div>
+          <div class="text"><b>割り勘の自動計算</b><span>複数人での立て替え・割り勘も自動で計算</span></div>
+        </div>
+        <div class="feature">
+          <div class="check">✓</div>
+          <div class="text"><b>オート精算</b><span>グループ内の貸し借りを、最小の支払い回数にまとめて提案</span></div>
+        </div>
+        <div class="feature">
+          <div class="check">✓</div>
+          <div class="text"><b>レシート添付・通知</b><span>レシート画像を添付して記録を残せる。変更があれば通知でお知らせ</span></div>
+        </div>
+        <div class="feature">
+          <div class="check">✓</div>
+          <div class="text"><b>かんたんログイン</b><span>Apple・Google・LINE・メールアドレスから選んでログイン</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="cta-wrap">
+      <a class="cta" href="https://apps.apple.com/app/id6808062809">今すぐApp Storeで入手</a>
+      <p>無料で始められます(Premiumプランあり)</p>
+    </div>
+  </div>
+
+  <footer>
+    <div>
+      <a href="https://claude.ai/code/artifact/2fbe0df7-aa78-4277-b890-b32f76bf7022">利用規約</a>
+      <a href="https://claude.ai/code/artifact/984fcff8-5d34-4ea0-a750-2d0968cb4173">プライバシーポリシー</a>
+    </div>
+    <div style="margin-top:10px;">© 2026 kashikari</div>
+  </footer>
+</body>
+</html>
