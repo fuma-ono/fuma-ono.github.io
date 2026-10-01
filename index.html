@@ -62,12 +62,15 @@
   .hero { position: relative; text-align: center; padding: 28px 0 36px; overflow: hidden; }
   .hero-blob {
     position: absolute;
-    top: -120px; left: 50%;
-    width: 640px; height: 640px;
+    top: -220px; left: 50%;
+    width: 520px; height: 520px;
     transform: translateX(-50%);
     z-index: 0;
-    opacity: 0.55;
     pointer-events: none;
+    background: radial-gradient(circle, var(--accent) 0%, var(--plum) 45%, transparent 72%);
+    opacity: 0.22;
+    filter: blur(60px);
+    border-radius: 50%;
   }
   .hero > :not(.hero-blob) { position: relative; z-index: 1; }
   .hero-icon { width: 84px; height: 84px; border-radius: 22px; box-shadow: 0 10px 28px rgba(43,36,32,0.18); margin-bottom: 20px; }
@@ -209,15 +212,7 @@
 
   <div class="wrap">
     <div class="hero">
-      <svg class="hero-blob" viewBox="0 0 600 600" aria-hidden="true">
-        <defs>
-          <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#ff6b4a" stop-opacity="0.35"/>
-            <stop offset="100%" stop-color="#6b3a78" stop-opacity="0.30"/>
-          </linearGradient>
-        </defs>
-        <path fill="url(#blobGrad)" d="M421,320Q420,420,330,460Q240,500,165,440Q90,380,95,285Q100,190,180,135Q260,80,350,115Q440,150,435,235Q430,320,421,320Z"/>
-      </svg>
+      <div class="hero-blob" aria-hidden="true"></div>
       <img class="hero-icon" src="icon.png" alt="kashikariアプリアイコン">
       <h1>かんたん・あんしん・スマートに<br>お金をシェア</h1>
       <p class="sub">友達との貸し借りを、お金も頼みごとも一緒に記録する。割り勘もオート精算も、このアプリひとつで。</p>
